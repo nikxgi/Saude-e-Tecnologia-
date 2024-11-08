@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Aplicativos de Saúde Digital</title>
+    
+    <!-- Link CDN para o Font Awesome diretamente do site -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
     <style>
         /* Estilos Gerais */
         * {
@@ -11,13 +15,22 @@
             padding: 0;
             box-sizing: border-box;
         }
+        html, body {
+            height: 100%; /* Garante que a página ocupe toda a altura da tela */
+            width: 100%; /* Garante que a página ocupe toda a largura da tela */
+            margin: 0; /* Remove qualquer margem externa */
+            padding: 0; /* Remove qualquer padding externo */
+        }
         body {
             font-family: 'Arial', sans-serif;
             background-color: #f5f5f5;
             color: #333;
+            overflow-x: hidden; /* Previne qualquer rolagem horizontal */
         }
+
+        /* Container principal */
         .container {
-            max-width: 1250px;
+            max-width: 1200px;
             margin: 0 auto;
             padding: 20px;
         }
@@ -33,172 +46,147 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
         header h1 {
-            font-size: 3rem;
+            font-size: 2.5rem;
             margin-bottom: 10px;
         }
         header p {
             font-size: 1.2rem;
-            margin-top: 10px;
             color: #d2ffd9;
+            margin-top: 10px;
         }
 
-        /* Tabela */
-        table {
-            width: 100%;
-            border-collapse: collapse;
+        /* Cards */
+        .card-container {
+            display: flex; /* Alinha os cards lado a lado */
+            flex-wrap: wrap; /* Permite que os cards que não cabem na linha vão para a próxima */
+            gap: 20px; /* Adiciona espaçamento entre os cards */
+            justify-content: center; /* Centraliza os cards na tela */
+        }
+        .card {
             background-color: #fff;
             border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        /* Títulos e alinhamento da tabela */
-        th, td {
             padding: 20px;
-            border-bottom: 1px solid #ddd;
-            border-right: 1px solid #ddd; /* Adicionando a linha vertical entre as colunas */
-            text-align: center; /* Alinhamento centralizado de todos os cabeçalhos e células */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, background-color 0.3s; /* Adiciona transição para a cor de fundo */
+            max-width: 500px; /* Define uma largura máxima para os cards */
+            min-height: 300px; /* Define uma altura mínima consistente para os cards */
+            flex: 1; /* Faz os cards ocuparem espaço de forma igual */
+            min-width: 300px; /* Define uma largura mínima para os cards */
+            margin: 0 auto;
         }
-
-        th {
-            background-color: #4CAF50;
-            color: white;
+        .card:hover {
+            transform: translateY(-5px);
+            background-color: #e7f5e4; /* Cor de fundo suave quando o cursor está sobre o card */
+        }
+        .card-title {
+            font-size: 1.5rem;
+            color: #4CAF50;
+            margin-bottom: 10px;
             font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            text-align: center; /* Centraliza o título do aplicativo */
         }
 
-        td {
+        /* Ícones abaixo do título */
+        .card-icons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 15px;
+        }
+
+        /* Estilo dos ícones com traços mais finos */
+        .card-icons i {
+            color: #237226; /* Cor verde para os ícones */
+            font-size: 1.2rem; /* Tamanho reduzido */
+            line-height: 1; /* Ajuste o espaçamento para ser mais compacto */
+        }
+
+        .card-type {
+            font-size: 1rem;
+            color: #333;
+            font-weight: 600;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center; /* Alinha ícones ao lado do texto */
+        }
+        .card-type i {
+            color: #237226; /* Cor verde para o ícone */
+            margin-left: 5px; /* Deixa os ícones bem próximos */
+            font-size: 14px; /* Reduz o tamanho do ícone */
+        }
+        .card-content {
+            font-size: 0.95rem;
+            color: #555;
+            margin-bottom: 15px;
+        }
+        .card-content ul {
+            list-style-type: disc;
+            padding-left: 20px;
+            margin-bottom: 15px;
+        }
+        .card-availability {
             font-size: 1rem;
             color: #555;
+            font-weight: 600;
+            margin-bottom: 20px;
         }
 
-        /* Largura personalizada para as colunas */
-        th:nth-child(1), td:nth-child(1) {
-            width: 18%;
+        /* Seção de Download */
+        .download-section {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1rem;
+            font-weight: bold;
+            color: #4CAF50; /* Destaca a palavra "Download" */
         }
-
-        th:nth-child(2), td:nth-child(2) {
-            width: 13%;
+        .download-buttons {
+            display: flex;
+            gap: 10px;
         }
-
-        th:nth-child(3), td:nth-child(3) {
-            width: 80%; /* Aumentando a largura da coluna "Principais Funções" */
-            text-align: left; 
-        }
-
-        th:nth-child(4), td:nth-child(4) {
-            width: 3%; /* Diminuindo a largura da coluna "Disponibilidade" */
-        }
-
-        th:nth-child(5), td:nth-child(5) {
-            width: 20%; /* Diminuindo a largura da coluna "Links para Download" */
-        }
-
-        /* Alinhamento específico para o cabeçalho "Principais Funções" */
-        th:nth-child(3) {
-            text-align: center; /* Centralizando o texto no cabeçalho da coluna "Principais Funções" */
-        }
-
-        /* Linhas alternadas e destaque ao passar o mouse */
-        tr:nth-child(even) {
-            background-color: #f9f9f9;
-        }
-
-        tr:hover {
-            background-color: #e1f5e3;
-        }
-
-        /* Caixas de conteúdo */
-        .content-box {
-            background-color: #f1f1f1;
-            padding: 20px;
-            margin: 10px 0;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-
-        .content-box h3 {
-            font-size: 1.3rem;
-            color: #333;
-            margin-bottom: 10px;
-        }
-
-        /* Links de Download */
-        .download-links a {
-            display: inline-block;
+        .download-buttons a {
+            display: inline-flex;
+            align-items: center;
             background-color: #4CAF50;
             color: white;
             padding: 8px 15px;
-            margin: 5px;
             text-decoration: none;
             border-radius: 4px;
             transition: background-color 0.3s;
+            font-size: 0.9rem;
         }
-        .download-links a:hover {
+        .download-buttons a i {
+            color: white; /* Define ícones de download como branco */
+            margin-right: 8px;
+        }
+        .download-buttons a:hover {
             background-color: #45a049;
-        }
-
-        /* Destaque para os nomes dos aplicativos */
-        td strong {
-            font-size: 1.1rem;
-            color: #4CAF50;
-        }
-
-        /* Listagem de Tópicos */
-        .function-list {
-            list-style-type: disc;
-            padding-left: 20px;
-            margin-top: 10px;
-        }
-        .function-list li {
-            margin-bottom: 10px;
-            font-size: 1rem;
-            color: #555;
         }
 
         /* Responsividade */
         @media (max-width: 768px) {
             header h1 {
-                font-size: 2rem;
+                font-size: 1.8rem;
             }
             header p {
                 font-size: 1rem;
             }
-            th, td {
+            .card-title {
+                font-size: 1.3rem;
+            }
+            .card-type, .card-availability {
                 font-size: 0.9rem;
-                padding: 10px;
-            }
-            .download-links a {
-                padding: 6px 10px;
-            }
-
-            /* Ajuste nas larguras para dispositivos menores */
-            th:nth-child(3), td:nth-child(3) {
-                width: 60%;
-            }
-
-            th:nth-child(4), td:nth-child(4) {
-                width: 20%;
-            }
-
-            th:nth-child(5), td:nth-child(5) {
-                width: 20%;
             }
         }
-            footer {
+
+        /* Rodapé */
+        footer {
             text-align: center;
             padding: 20px;
             margin-top: 30px;
             background-color: #333;
             color: white;
             font-size: 1rem;
-            border-radius: 0px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        footer p {
-            margin: 0;
         }
     </style>
 </head>
@@ -210,191 +198,383 @@
         <p>Acompanhe sua saúde física e mental, pratique meditação e melhore seu bem-estar com aplicativos digitais.</p>
     </header>
     
-    <!-- Caixa de Conteúdo -->
-    <div class="content-box">
-        <table>
-            <tr>
-                <th>Aplicativo</th>
-                <th>Tipo</th>
-                <th>Principais Funções</th>
-                <th>Disponibilidade</th>
-                <th>Links para Download</th>
-            </tr>
-            <tr>
-                <td><strong>MyFitnessPal</strong></td>
-                <td>Diário alimentar</td>
-                <td>
-                    <ul class="function-list">
-                        <li>Monitoramento de atividades físicas e metas de exercício.</li>
-                        <li>Comunidade ativa e planos de refeições personalizados.</li>
-                        <li>Rastreamento de calorias e nutrientes.</li>
-                    </ul>
-                </td>
-                <td>Gratuito com opção de assinatura premium</td>
-                <td class="download-links">
-                    <a href="https://play.google.com/store/apps/details?id=com.myfitnesspal.android&hl=pt_BR&pli=1">Android</a>
-                    <a href="https://apps.apple.com/br/app/myfitnesspal-di%C3%A1rio-alimentar/id341232718">iOS</a>
-                </td>
-            </tr>
-            <tr>
-                <td><strong>Headspace</strong></td>
-                <td>Meditação Guiada</td>
-                <td>
-                    <ul class="function-list">
-                        <li>Programas de relaxamento e meditação para iniciantes e avançados.</li>
-                        <li>Treinamentos para melhorar concentração e equilíbrio emocional.</li>
-                        <li>Meditações guiadas para ansiedade, sono e foco.</li>
-                    </ul>
-                </td>
-                <td>Gratuito com opção de assinatura premium</td>
-                <td class="download-links">
-                    <a href="https://play.google.com/store/apps/details?id=com.getsomeheadspace.android&hl=pt_BR">Android</a>
-                    <a href="https://apps.apple.com/br/app/headspace-sono-e-medita%C3%A7%C3%A3o/id493145008">iOS</a>
-                </td>
-            </tr>
-            <tr>
-                <td><strong>Google Fit</strong></td>
-                <td>Monitoramento de atividades físicas e saúde em geral</td>
-                <td>
-                    <ul class="function-list">
-                        <li>Objetivos personalizados com base nas metas de saúde da OMS.</li>
-                        <li>Monitoramento cardíaco (com wearables compatíveis).</li>
-                        <li>Rastreamento de passos, quilometragem e calorias.</li>
-                    </ul>
-                </td>
-                <td>Gratuito</td>
-                <td class="download-links">
-                    <a href="https://play.google.com/store/apps/details?id=com.google.android.apps.fitness&hl=pt_BR">Android</a>
-                    <a href="https://apps.apple.com/br/app/google-fit-activity-tracker/id1433864494">iOS</a>
-                </td>
-            </tr>
-            <tr>
-                <td><strong>Cíngulo</strong></td>
-                <td>Bem-estar Mental</td>
-                <td>
-                    <ul class="function-list">
-                        <li>Sessões guiadas para ansiedade, estresse e autoconhecimento.</li>
-                        <li>Autoavaliações emocionais e testes de personalidade.</li>
-                        <li>Exercícios práticos e acompanhamento do humor.</li>
-                    </ul>
-                </td>
-                <td>Gratuito com conteúdos pagos (assinatura mensal ou anual)</td>
-                <td class="download-links">
-                    <a href="https://play.google.com/store/apps/details?id=com.cingulo.app&hl=pt_BR">Android</a>
-                    <a href="https://apps.apple.com/br/app/cingulo-bem-estar-mental/id1190110484">iOS</a>
-                </td>
-            </tr>
-            <tr>
-                <td><strong>Doctoralia</strong></td>
-                <td>Agendamento e notificações de consultas</td>
-                <td>
-                    <ul class="function-list">
-                        <li>Avaliações de médicos e clínicas, com comentários de outros usuários.</li>
-                        <li>Agendamento de consultas e teleconsultas.</li>
-                        <li>Notificações e lembretes de consultas.</li>
-                    </ul>
-                </td>
-                <td>Gratuito</td>
-                <td class="download-links">
-                    <a href="https://play.google.com/store/apps/details?id=br.com.doctoralia&hl=pt_BR">Android</a>
-                    <a href="https://apps.apple.com/br/app/doctoralia-brasil/id1453542076">iOS</a>
-                </td>
-            </tr>
-            <tr>
-                <td><strong>Fabulous</strong></td>
-                <td>Rotinas Diárias</td>
-                <td>
-                    <ul class="function-list">
-                        <li>Criação de hábitos personalizados como sono, alimentação e atividade física.</li>
-                        <li>Meditações, dicas para melhorar a energia e produtividade ao longo do dia.</li>
-                        <li>Lembretes para reforçar hábitos saudáveis.</li>
-                    </ul>
-                </td>
-                <td>Gratuito (versão básica) e versão paga para recursos extras.</td>
-                <td class="download-links">
-                    <a href="https://play.google.com/store/apps/details?id=co.thefabulous.app&hl=pt_BR">Android</a>
-                    <a href="https://apps.apple.com/br/app/fabulous-rotinas-di%C3%A1rias/id1203637303">iOS</a>
-                </td>
-            </tr>
-            <tr>
-                <td><strong>Meu SUS Digital</strong></td>
-                <td>Acesso aos serviços de saúde pública</td>
-                <td>
-                    <ul class="function-list">
-                        <li>Acompanhamento de histórico de atendimentos e tratamentos realizados.</li>
-                        <li>Acompanhamento de vacinação e histórico de medicamentos.</li>
-                        <li>Agendamento de consultas e exames dentro do SUS.</li>
-                    </ul>
-                </td>
-                <td>Gratuito</td>
-                <td class="download-links">
-                    <a href="https://play.google.com/store/apps/details?id=br.gov.datasus.cnsdigital&hl=pt_BR">Android</a>
-                    <a href="https://apps.apple.com/br/app/meu-sus-digital/id1045754608">iOS</a>
-                </td>
-            </tr>
-            <tr>
-                <td><strong>Saúde Já - Curitiba</strong></td>
-                <td>Acesso aos serviços de saúde pública da cidade de Curitiba</td>
-                <td>
-                    <ul class="function-list">
-                        <li>Facilita a comunicação entre o paciente e a Secretaria Municipal de Saúde através do aplicativo.</li>
-                        <li>Acesso a resultados de exames laboratoriais realizados nas unidades da rede pública.</li>
-                        <li>Agendamento de consultas e exames nas Unidades de Saúde Municipais.</li>
-                    </ul>
-                </td>
-                <td>Gratuito para usuários cadastrados no SUS de Curitiba</td>
-                <td class="download-links">
-                    <a href="https://play.google.com/store/apps/details?id=br.org.curitiba.ici.saudeja.curitiba&hl=pt_BR">Android</a>
-                    <a href="https://apps.apple.com/br/app/sa%C3%BAde-j%C3%A1-curitiba/id1239810987">iOS</a>
-                </td>
-            </tr>
-            <tr>
-                <td><strong>Fatsecret</strong></td>
-                <td>Contador de Calorias</td>
-                <td>
-                    <ul class="function-list">
-                        <li>Scaneer de produtos alimentícios para uma entrada rápida de informações nutricionais.</li>
-                        <li>Registro de alimentos consumidos e cálculo de calorias e nutrientes.</li>
-                        <li>Diário de exercícios e comunidade de apoio.</li>
-                    </ul>
-                </td>
-                <td>Gratuito, com compras dentro do app para recursos extras.</td>
-                <td class="download-links">
-                    <a href="https://play.google.com/store/apps/details?id=com.fatsecret.android&hl=pt_BR">Android</a>
-                    <a href="https://apps.apple.com/br/app/contador-de-calorias-fatsecret/id347184248">iOS</a>
-                </td>
-            </tr>
-            <tr>
-                <td><strong>Accupedo</strong></td>
-                <td>Contador de Passos</td>
-                <td>
-                    <ul class="function-list">
-                        <li>Contagem de passos e rastreamento de distância e calorias queimadas.</li>
-                        <li>Gráficos de progresso para motivação extra.</li>
-                        <li>Relatórios diários, semanais e mensais.</li>
-                    </ul>
-                </td>
-                <td>Gratuito</td>
-                <td class="download-links">
-                    <a href="https://play.google.com/store/apps/details?id=com.corusen.accupedo.te&hl=pt_BR">Android</a>
-                    <a href="https://apps.apple.com/br/app/accupedo-ped%C3%B4metro/id570886923">iOS</a>
-                </td>
-            </tr>
-            <tr>
-                <td><strong>Water Reminder</strong></td>
-                <td>Lembrete para hidratação</td>
-                <td>
-                    <ul class="function-list">
-                        <li>Lembretes personalizados para hidratação.</li>
-                        <li>Metas diárias de consumo de água.</li>
-                        <li>Gráficos de progresso.</li>
-                    </ul>
-                </td>
-                <td>Gratuito</td>
-                <td class="download-links">
-                    <a href="https://play.google.com/store/apps/details?id=com.vgfit.waterbalance&hl=pt_BR">Android</a>
-                    <a href="https://apps.apple.com/br/app/agua-reminder-beba-%C3%A1gua/id1221965482">iOS</a>
-        </table>
+    <div class="card-container">
+        <!-- Card 1 -->
+        <div class="card">
+            <div class="card-title">MyFitnessPal</div>
+            <!-- Três ícones minimalistas com traços finos abaixo do título -->
+            <div class="card-icons">
+                <i class="fas fa-dumbbell"></i> <!-- Ícone de alimentação com traços finos -->
+                <i class="fas fa-utensils"></i> <!-- Ícone de exercício com traços finos -->
+                <i class="fas fa-users"></i> <!-- Ícone de saúde com traços finos -->
+            </div>
+            <div class="card-type">
+                Tipo: Diário Alimentar
+            </div>
+            <div class="card-content">
+                <ul>
+                    <li>Monitoramento de atividades físicas e metas de exercício.</li>
+                    <li>Comunidade ativa e planos de refeições personalizados.</li>
+                    <li>Rastreamento de calorias e nutrientes.</li>
+                </ul>
+            </div>
+            <div class="card-availability">Disponibilidade: Gratuito com opção de assinatura premium</div>
+            <div class="download-section">
+                <span>Download:</span>
+                <div class="download-buttons">
+                    <a href="https://play.google.com/store/apps/details?id=com.myfitnesspal.android">
+                        <i class="fab fa-android"></i> Android
+                    </a>
+                    <a href="https://apps.apple.com/br/app/myfitnesspal-di%C3%A1rio-alimentar/id341232718">
+                        <i class="fab fa-apple"></i> iOS
+                    </a>
+                </div>
+            </div>
+        </div>
+        <!-- Card 2 -->
+        <div class="card">
+            <div class="card-title">Headspace</div>
+            <!-- Três ícones minimalistas com traços finos abaixo do título -->
+            <div class="card-icons">
+                <i class="fas fa-laptop-medical"></i> <!-- Ícone de meditação com traços finos -->
+                <i class="fas fa-spa"></i> <!-- Ícone de concentração com traços finos -->
+                <i class="fas fa-heartbeat"></i> <!-- Ícone de relaxamento com traços finos -->
+            </div>
+            <div class="card-type">
+                Tipo: Meditação Guiada
+            </div>
+            <div class="card-content">
+                <ul>
+                    <li>Treinamentos para reduzir o estresse e melhorar o foco.</li>
+                    <li>Aulas de meditação para iniciantes e avançados.</li>
+                    <li>Recursos para melhorar o sono e saúde mental.</li>
+                </ul>
+            </div>
+            <div class="card-availability">Disponibilidade: Gratuito com opção de assinatura premium</div>
+            <div class="download-section">
+                <span>Download:</span>
+                <div class="download-buttons">
+                    <a href="https://play.google.com/store/apps/details?id=com.headspace.android">
+                        <i class="fab fa-android"></i> Android
+                    </a>
+                    <a href="https://apps.apple.com/br/app/headspace-meditation/id493145008">
+                        <i class="fab fa-apple"></i> iOS
+                    </a>
+                </div>
+            </div>
+        </div>
+        <!-- Card 3 -->
+        <div class="card">
+            <div class="card-title">Google Fit</div>
+            <!-- Três ícones minimalistas com traços finos abaixo do título -->
+            <div class="card-icons">
+                <i class="fas fa-dumbbell"></i> <!-- Ícone de alimentação com traços finos -->
+                <i class="fas fa-heartbeat"></i> <!-- Ícone de exercício com traços finos -->
+                <i class="fas fa-running"></i> <!-- Ícone de saúde com traços finos -->
+            </div>
+            <div class="card-type">
+                Tipo: Monitoramento de atividades físicas e saúde em geral
+            </div>
+            <div class="card-content">
+                <ul>
+                    <li>Objetivos personalizados com base nas metas de saúde da OMS.</li>
+                    <li>Monitoramento cardíaco (com wearables compatíveis).</li>
+                    <li>Rastreamento de passos, quilometragem e calorias.</li>
+                </ul>
+            </div>
+            <div class="card-availability">Disponibilidade: Gratuito</div>
+            <div class="download-section">
+                <span>Download:</span>
+                <div class="download-buttons">
+                    <a href="https://play.google.com/store/apps/details?id=com.google.android.apps.fitness&hl=pt_BR">
+                        <i class="fab fa-android"></i> Android
+                    </a>
+                    <a href="https://apps.apple.com/br/app/google-fit-activity-tracker/id1433864494">
+                        <i class="fab fa-apple"></i> iOS
+                    </a>
+                </div>
+            </div>
+        </div>
+        <!-- Card 4 -->
+        <div class="card">
+            <div class="card-title">Cíngulo</div>
+            <!-- Três ícones minimalistas com traços finos abaixo do título -->
+            <div class="card-icons">
+                <i class="fas fa-face-grin-wink"></i> <!-- Ícone de alimentação com traços finos -->
+                <i class="fas fa-seedling"></i> <!-- Ícone de exercício com traços finos -->
+                <i class="fas fa-laptop-medical"></i> <!-- Ícone de saúde com traços finos -->
+            </div>
+            <div class="card-type">
+                Tipo: Bem-estar Mental
+            </div>
+            <div class="card-content">
+                <ul>
+                    <li>Sessões guiadas para ansiedade, estresse e autoconhecimento.</li>
+                    <li>Autoavaliações emocionais e testes de personalidade.</li>
+                    <li>Exercícios práticos e acompanhamento do humor.</li>
+                </ul>
+            </div>
+            <div class="card-availability">Disponibilidade: Gratuito com alguns conteúdos pagos (assinatura mensal ou anual).</div>
+            <div class="download-section">
+                <span>Download:</span>
+                <div class="download-buttons">
+                    <a href="https://play.google.com/store/apps/details?id=com.cingulo.app&hl=pt_BR">
+                        <i class="fab fa-android"></i> Android
+                    </a>
+                    <a href="https://apps.apple.com/br/app/cingulo-bem-estar-mental/id1190110484">
+                        <i class="fab fa-apple"></i> iOS
+                    </a>
+                </div>
+            </div>
+        </div>
+        <!-- Card 5 -->
+        <div class="card">
+            <div class="card-title">Doctoralia</div>
+            <!-- Três ícones minimalistas com traços finos abaixo do título -->
+            <div class="card-icons">
+                <i class="fas fa-bell"></i> <!-- Ícone de alimentação com traços finos -->
+                <i class="fas fa-hand-holding-medical"></i> <!-- Ícone de exercício com traços finos -->
+                <i class="fas fa-laptop-medical"></i> <!-- Ícone de saúde com traços finos -->
+            </div>
+            <div class="card-type">
+                Tipo: Agendamento, notificações e lembretes de consultas.</div>
+            <div class="card-content">
+                <ul>
+                    <li>Avaliações de médicos e clínicas, com comentários de outros usuários.</li>
+                    <li>Agendamento de consultas e teleconsultas.</li>
+                    <li>Notificações e lembretes de consultas.</li>
+                </ul>
+            </div>
+            <div class="card-availability">Disponibilidade: Gratuito</div>
+            <div class="download-section">
+                <span>Download:</span>
+                <div class="download-buttons">
+                    <a href="https://play.google.com/store/apps/details?id=br.com.doctoralia&hl=pt_BR">
+                        <i class="fab fa-android"></i> Android
+                    </a>
+                    <a href="https://apps.apple.com/br/app/doctoralia-brasil/id1453542076">
+                        <i class="fab fa-apple"></i> iOS
+                    </a>
+                </div>
+            </div>
+        </div>
+        <!-- Card 6 -->
+        <div class="card">
+            <div class="card-title">Fabulous</div>
+            <!-- Três ícones minimalistas com traços finos abaixo do título -->
+            <div class="card-icons">
+                <i class="fas fa-dumbbell"></i> <!-- Ícone de alimentação com traços finos -->
+                <i class="fas fa-utensils"></i> <!-- Ícone de exercício com traços finos -->
+                <i class="fas fa-bell"></i> <!-- Ícone de saúde com traços finos -->
+            </div>
+            <div class="card-type">
+                Tipo: Rotinas Diárias</div>
+            <div class="card-content">
+                <ul>
+                    <li>Criação de hábitos personalizados como sono, alimentação e atividade física.</li>
+                    <li>Meditações, dicas para melhorar a energia e produtividade ao longo do dia.</li>
+                    <li>Lembretes para reforçar hábitos saudáveis.</li>
+                </ul>
+            </div>
+            <div class="card-availability">Disponibilidade: Gratuito (versão básica) e versão paga para recursos extras.</div>
+            <div class="download-section">
+                <span>Download:</span>
+                <div class="download-buttons">
+                    <a href="https://play.google.com/store/apps/details?id=co.thefabulous.app&hl=pt_BR">
+                        <i class="fab fa-android"></i> Android
+                    </a>
+                    <a href="https://apps.apple.com/br/app/fabulous-rotinas-di%C3%A1rias/id1203637303">
+                        <i class="fab fa-apple"></i> iOS
+                    </a>
+                </div>
+            </div>
+        </div>
+        <!-- Card 7 -->
+        <div class="card">
+            <div class="card-title">Meu SUS Digital</div>
+            <!-- Três ícones minimalistas com traços finos abaixo do título -->
+            <div class="card-icons">
+                <i class="fas fa-briefcase-medical"></i> <!-- Ícone de alimentação com traços finos -->
+                <i class="fas fa-stethoscope"></i> <!-- Ícone de exercício com traços finos -->
+                <i class="fas fa-syringe"></i> <!-- Ícone de saúde com traços finos -->
+            </div>
+            <div class="card-type">
+                Tipo: Acesso aos serviços de saúde pública</div>
+            <div class="card-content">
+                <ul>
+                    <li>Acompanhamento de histórico de atendimentos e tratamentos realizados.</li>
+                    <li>Acompanhamento de vacinação e histórico de medicamentos.</li>
+                    <li>Agendamento de consultas e exames dentro do SUS.</li>
+                </ul>
+            </div>
+            <div class="card-availability">Disponibilidade: Gratuito</div>
+            <div class="download-section">
+                <span>Download:</span>
+                <div class="download-buttons">
+                    <a href="https://play.google.com/store/apps/details?id=br.gov.datasus.cnsdigital&hl=pt_BR">
+                        <i class="fab fa-android"></i> Android
+                    </a>
+                    <a href="https://apps.apple.com/br/app/meu-sus-digital/id1045754608">
+                        <i class="fab fa-apple"></i> iOS
+                    </a>
+                </div>
+            </div>
+        </div>
+        <!-- Card 8 -->
+        <div class="card">
+            <div class="card-title">Saúde Já - Curitiba</div>
+            <!-- Três ícones minimalistas com traços finos abaixo do título -->
+            <div class="card-icons">
+                <i class="fas fa-stethoscope"></i> <!-- Ícone de alimentação com traços finos -->
+                <i class="fas fa-comment-medical"></i> <!-- Ícone de exercício com traços finos -->
+                <i class="fas fa-file-waveform"></i> <!-- Ícone de saúde com traços finos -->
+            </div>
+            <div class="card-type">
+                Tipo: Acesso aos serviços de saúde pública da cidade de Curitiba</div>
+            <div class="card-content">
+                <ul>
+                    <li>Facilita a comunicação entre o paciente e a Secretaria Municipal de Saúde através do aplicativo.</li>
+                    <li>Acesso a resultados de exames laboratoriais realizados nas unidades da rede pública.</li>
+                    <li>Agendamento de consultas e exames nas Unidades de Saúde Municipais.</li>
+                </ul>
+            </div>
+            <div class="card-availability">Disponibilidade: Gratuito para usuários cadastrados no SUS de Curitiba</div>
+            <div class="download-section">
+                <span>Download:</span>
+                <div class="download-buttons">
+                    <a href="https://play.google.com/store/apps/details?id=br.org.curitiba.ici.saudeja.curitiba&hl=pt_BR">
+                        <i class="fab fa-android"></i> Android
+                    </a>
+                    <a href="https://apps.apple.com/br/app/sa%C3%BAde-j%C3%A1-curitiba/id1239810987">
+                        <i class="fab fa-apple"></i> iOS
+                    </a>
+                </div>
+            </div>
+        </div>
+        <!-- Card 9 -->
+        <div class="card">
+            <div class="card-title">Fatsecret</div>
+            <!-- Três ícones minimalistas com traços finos abaixo do título -->
+            <div class="card-icons">
+                <i class="fas fa-dumbbell"></i> <!-- Ícone de alimentação com traços finos -->
+                <i class="fas fa-barcode"></i> <!-- Ícone de exercício com traços finos -->
+                <i class="fas fa-users"></i> <!-- Ícone de saúde com traços finos -->
+            </div>
+            <div class="card-type">
+                Tipo: Contador de Calorias</div>
+            <div class="card-content">
+                <ul>
+                    <li>Scaneer de produtos alimentícios para uma entrada rápida de informações nutricionais.</li>
+                    <li>Registro de alimentos consumidos e cálculo de calorias e nutrientes.</li>
+                    <li>Diário de exercícios e comunidade de apoio.</li>
+                </ul>
+            </div>
+            <div class="card-availability">Disponibilidade: Gratuito, com compras dentro do app para recursos extras.</div>
+            <div class="download-section">
+                <span>Download:</span>
+                <div class="download-buttons">
+                    <a href="https://play.google.com/store/apps/details?id=com.fatsecret.android&hl=pt_BR">
+                        <i class="fab fa-android"></i> Android
+                    </a>
+                    <a href="https://apps.apple.com/br/app/contador-de-calorias-fatsecret/id347184248">
+                        <i class="fab fa-apple"></i> iOS
+                    </a>
+                </div>
+            </div>
+        </div>
+        <!-- Card 10 -->
+        <div class="card">
+            <div class="card-title">Accupedo</div>
+            <!-- Três ícones minimalistas com traços finos abaixo do título -->
+            <div class="card-icons">
+                <i class="fas fa-file-lines"></i> <!-- Ícone de alimentação com traços finos -->
+                <i class="fas fa-person-walking"></i> <!-- Ícone de exercício com traços finos -->
+                <i class="fas fa-check-double"></i> <!-- Ícone de saúde com traços finos -->
+            </div>
+            <div class="card-type">
+                Tipo: Contador de Passos</div>
+            <div class="card-content">
+                <ul>
+                    <li>Contagem de passos e rastreamento de distância e calorias queimadas.</li>
+                    <li>Gráficos de progresso para motivação extra.</li>
+                    <li>Relatórios diários, semanais e mensais.</li>
+                </ul>
+            </div>
+            <div class="card-availability">Disponibilidade: Gratuito</div>
+            <div class="download-section">
+                <span>Download:</span>
+                <div class="download-buttons">
+                    <a href="https://play.google.com/store/apps/details?id=com.corusen.accupedo.te&hl=pt_BR">
+                        <i class="fab fa-android"></i> Android
+                    </a>
+                    <a href="https://apps.apple.com/br/app/accupedo-ped%C3%B4metro/id570886923">
+                        <i class="fab fa-apple"></i> iOS
+                    </a>
+                </div>
+            </div>
+        </div>
+        <!-- Card 11 -->
+        <div class="card">
+            <div class="card-title">Water Reminder</div>
+            <!-- Três ícones minimalistas com traços finos abaixo do título -->
+            <div class="card-icons">
+                <i class="fas fa-chart-line"></i> <!-- Ícone de alimentação com traços finos -->
+                <i class="fas fa-droplet"></i> <!-- Ícone de exercício com traços finos -->
+                <i class="fas fa-bell"></i> <!-- Ícone de saúde com traços finos -->
+            </div>
+            <div class="card-type">
+                Tipo: Lembrete para hidratação</div>
+            <div class="card-content">
+                <ul>
+                    <li>Lembretes personalizados para hidratação.</li>
+                    <li>Metas diárias de consumo de água.</li>
+                    <li>Gráficos de progresso.</li>
+                </ul>
+            </div>
+            <div class="card-availability">Disponibilidade: Gratuito</div>
+            <div class="download-section">
+                <span>Download:</span>
+                <div class="download-buttons">
+                    <a href="https://play.google.com/store/apps/details?id=com.vgfit.waterbalance&hl=pt_BR">
+                        <i class="fab fa-android"></i> Android
+                    </a>
+                    <a href="https://apps.apple.com/br/app/agua-reminder-beba-%C3%A1gua/id1221965482">
+                        <i class="fab fa-apple"></i> iOS
+                    </a>
+                </div>
+            </div>
+        </div>
+        <!-- Card 12 -->
+        <div class="card">
+            <div class="card-title">Strava</div>
+            <!-- Três ícones minimalistas com traços finos abaixo do título -->
+            <div class="card-icons">
+                <i class="fas fa-person-running"></i> <!-- Ícone de alimentação com traços finos -->
+                <i class="fas fa-hourglass-half"></i> <!-- Ícone de exercício com traços finos -->
+                <i class="fas fa-user-group"></i> <!-- Ícone de saúde com traços finos -->
+            </div>
+            <div class="card-type">
+                Tipo: Rastreamento de Atividades Físicas</div>
+            <div class="card-content">
+                <ul>
+                    <li>Comparação de resultados em diferentes percursos.</li>
+                    <li>Desafios e integração com amigos e comunidade.</li>
+                    <li>Monitoramento de tempo, distância e ritmo.</li>
+                </ul>
+            </div>
+            <div class="card-availability">Disponibilidade: Gratuito com opção de assinatura premium</div>
+            <div class="download-section">
+                <span>Download:</span>
+                <div class="download-buttons">
+                    <a href="https://play.google.com/store/apps/details?id=com.strava&hl=pt_BR">
+                        <i class="fab fa-android"></i> Android
+                    </a>
+                    <a href="https://apps.apple.com/br/app/strava-corrida-pedal-trilha/id426826309">
+                        <i class="fab fa-apple"></i> iOS
+                    </a>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -405,4 +585,3 @@
 
 </body>
 </html>
-
